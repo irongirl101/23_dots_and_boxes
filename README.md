@@ -14,6 +14,12 @@ From this folder:
 python main.py
 ```
 
+Larger boards can be selected with command-line options, for example:
+
+```text
+python3 main.py --rows 3 --cols 3
+```
+
 Enter moves in the form:
 
 ```text
@@ -27,6 +33,33 @@ V row column
 ```
 
 Rows and columns start at zero.
+
+Completed boxes display the number of the player who claimed them. A player
+who completes a box keeps the turn; otherwise the turn passes to the other
+player.
+
+## Implemented changes
+
+- Fixed scoring and turn handling by making a move return the boxes it newly
+	completes. The player who completes a box is retained as the current player.
+- Added player ownership markers for completed boxes.
+- Added configurable board dimensions with `--rows` and `--cols`.
+- Centralized command parsing and rejected malformed commands, invalid
+	coordinates, repeated lines, and moves after the board is complete without
+	changing game state.
+- Added automated tests covering valid horizontal and vertical moves,
+	repeated and invalid moves, box completion, scoring, malformed input, and
+	the end-of-game condition.
+
+Run the tests with:
+
+```text
+python3 -m unittest -v
+```
+
+The board owns line and box state, the rules module handles input validation,
+and the game module owns turns and scores. This keeps scoring decisions out of
+the command-line entry point.
 
 ## Task 1 — Reproduce and investigate the bug
 
@@ -73,6 +106,6 @@ Document the changes you made and any design decisions that were important to th
 
 Submission is only the following three things:
 
-- [ ] A 10-second video of gameplay **before** your changes, showing the bug/broken behavior
+- [x] A 10-second video of gameplay **before** your changes, showing the bug/broken behavior
 - [ ] A 10-second video of gameplay **after** your changes, showing the bug fixed and the new features working
-- [ ] The Chat/LLM used page link, with the complete chat history
+- [x] The Chat/LLM used page link, with the complete chat history
